@@ -10,7 +10,7 @@ terraform {
 }
 
 provider "aws" {
-  region  = var.region_name
+  region = var.region_name
 }
 
 data "aws_ami" "couchbase_ami" {
@@ -35,6 +35,10 @@ data "aws_ami" "couchbase_ami" {
   }
 }
 
+resource "random_id" "labid" {
+  byte_length = 4
+}
+
 resource "aws_instance" "generator_nodes" {
   count                  = var.gen_instances
   ami                    = data.aws_ami.couchbase_ami.id
@@ -50,8 +54,9 @@ resource "aws_instance" "generator_nodes" {
   }
 
   tags = {
-    Name = "${var.gen_name_prefix}${format("%02d", count.index + var.gen_start_num)}"
-    Role = "${var.gen_name_prefix}"
+    Name = "${var.gen_name_prefix}-${random_id.labid.hex}-${format("%02d", count.index + var.gen_start_num)}"
+    Role = "generator"
+    LabName = "lab-${random_id.labid.hex}"
   }
 
   provisioner "file" {
