@@ -36,7 +36,7 @@ variable "instance_type" {
 
 variable "gen_instance_type" {
   description = "Generator node instance type"
-  default     = "c4.xlarge"
+  default     = "c5.4xlarge"
   type        = string
 }
 

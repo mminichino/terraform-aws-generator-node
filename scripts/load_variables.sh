@@ -109,7 +109,7 @@ vpc_id=""
 security_group_ids=""
 root_volume_iops="0"
 root_volume_size="50"
-root_volume_type="gp2"
+root_volume_type="gp3"
 
 aws s3 ls >/dev/null 2>&1
 if [ $? -ne 0 ]; then

@@ -1,11 +1,18 @@
 output lab-id {
-    value = "${lookup(aws_instance.couchbase_nodes[0].tags, "LabName")}"
+    value = "${random_id.labid.hex}"
 }
 
-output "gen-node-ips" {
+output "gen-node-public" {
   value = [
     for instance in aws_instance.generator_nodes:
     instance.public_ip
+  ]
+}
+
+output "gen-node-private" {
+  value = [
+    for instance in aws_instance.generator_nodes:
+    instance.private_ip
   ]
 }
 
